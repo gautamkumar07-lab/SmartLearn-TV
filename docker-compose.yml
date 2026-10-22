@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  smartlearn-tv:
+    build: .
+    container_name: smartlearn-tv-app
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - NODE_ENV=production
+    restart: unless-stopped

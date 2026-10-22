@@ -1,0 +1,63 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // User documents
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+      
+      // Profiles subcollection
+      match /profiles/{profileId} {
+        allow read, write: if isOwner(userId);
+
+        match /tasks/{taskId} {
+          allow read, write: if isOwner(userId);
+        }
+
+        match /progress/{lessonId} {
+          allow read, write: if isOwner(userId);
+        }
+
+        match /doubts/{doubtId} {
+          allow read, write: if isOwner(userId);
+        }
+      }
+    }
+
+    // Public courses, lessons, and quizzes
+    match /courses/{courseId} {
+      allow read: if true;
+      allow write: if request.auth.token.admin == true;
+    }
+
+    match /lessons/{lessonId} {
+      allow read: if true;
+      allow write: if request.auth.token.admin == true;
+    }
+
+    match /quizzes/{quizId} {
+      allow read: if true;
+      allow write: if request.auth.token.admin == true;
+    }
+
+    // Public Global Leaderboard
+    match /leaderboard/{entry} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    // Parent security collection (requires PIN validation via cloud function)
+    match /parent_settings/{profileId} {
+      allow read, write: if isAuthenticated();
+    }
+  }
+}

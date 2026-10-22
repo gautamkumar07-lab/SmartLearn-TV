@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --firetv-bg: #0d1117;
+    --firetv-card: #161b22;
+    --firetv-card-focus: #212836;
+    --firetv-cyan: #00a8e1;
+    --firetv-alexa: #00d2ff;
+    --firetv-gold: #ff9900;
+  }
+
+  body {
+    background-color: #0b0e14;
+    color: #f0f6fc;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Amazon Ember", sans-serif;
+    overflow-x: hidden;
+    user-select: none;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* TV Focus Outline & Glow */
+.tv-focusable {
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+  position: relative;
+}
+
+.tv-focusable:focus-visible,
+.tv-focusable.is-focused {
+  transform: scale(1.05);
+  box-shadow: 0 0 0 3px #00a8e1, 0 12px 30px rgba(0, 168, 225, 0.45);
+  z-index: 30;
+}
+
+.tv-focusable.is-focused-subtle {
+  transform: scale(1.02);
+  box-shadow: 0 0 0 2px #00a8e1, 0 8px 20px rgba(0, 168, 225, 0.3);
+  z-index: 20;
+}
+
+/* Hide standard scrollbars for TV Carousels */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Alexa Pulsing Glow Animation */
+@keyframes alexaPulse {
+  0% {
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.4), 0 0 30px rgba(0, 168, 225, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(0, 210, 255, 0.8), 0 0 50px rgba(0, 168, 225, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.4), 0 0 30px rgba(0, 168, 225, 0.2);
+  }
+}
+
+.alexa-glow {
+  animation: alexaPulse 2s infinite ease-in-out;
+}
+
+/* Sound wave animation for Alexa */
+@keyframes soundwave {
+  0%, 100% { height: 6px; }
+  50% { height: 24px; }
+}
+.animate-wave-1 { animation: soundwave 1s infinite 0.1s ease-in-out; }
+.animate-wave-2 { animation: soundwave 1s infinite 0.3s ease-in-out; }
+.animate-wave-3 { animation: soundwave 1s infinite 0.2s ease-in-out; }
+.animate-wave-4 { animation: soundwave 1s infinite 0.4s ease-in-out; }
+.animate-wave-5 { animation: soundwave 1s infinite 0.25s ease-in-out; }
+
+/* Backdrop Blur and Gradient Overlays */
+.tv-gradient-overlay {
+  background: linear-gradient(180deg, rgba(11, 14, 20, 0.1) 0%, rgba(11, 14, 20, 0.7) 60%, rgba(11, 14, 20, 0.98) 100%);
+}
+
+.hero-vignette {
+  background: radial-gradient(circle at 75% 30%, rgba(0, 168, 225, 0.15) 0%, rgba(11, 14, 20, 0.85) 65%, #0b0e14 100%);
+}
